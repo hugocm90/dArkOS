@@ -6,9 +6,11 @@ Ark_devenv32/
 Arkbuild_ccache/
 Arkbuild_package_cache/
 ArkOS_File_System.img
+build.log*
 builddevenv.log
 mnt/
 odroidgoA-4.4.y/
+rg351/
 *.img
 .img.*
 wget-log*
