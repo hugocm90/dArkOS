@@ -2,11 +2,18 @@
 
 # Create extlinux.conf
 sudo mkdir -p ${mountpoint}/extlinux
+
+if [[ "$UNIT" == "miniloong" ]]; then
+  ROTATE=" fbcon=rotate:3"
+else
+  ROTATE=""
+fi
+
 cat <<EOF | sudo tee ${mountpoint}/extlinux/extlinux.conf
 LABEL ArkOS
   LINUX /Image
   FDT /${UNIT_DTB}.dtb
-  APPEND root=/dev/mmcblk1p4 initrd=/uInitrd rootwait rw fsck.repair=yes quiet splash vt.global_cursor_default=0 net.ifnames=0 console=tty1 plymouth.ignore-serial-consoles consoleblank=0 loglevel=5 video=HDMI-A-1:1280x720@60
+  APPEND root=/dev/mmcblk1p4 initrd=/uInitrd rootwait rw fsck.repair=yes quiet splash vt.global_cursor_default=0 net.ifnames=0${ROTATE} console=tty1 plymouth.ignore-serial-consoles consoleblank=0 loglevel=5 video=HDMI-A-1:1280x720@60
 EOF
 
 #sudo cp logo.bmp ${mountpoint}/
