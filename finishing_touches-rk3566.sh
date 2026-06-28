@@ -195,6 +195,13 @@ sudo chroot Arkbuild/ bash -c "(crontab -l 2>/dev/null; echo \"@reboot /usr/loca
 # Disable requirement for sudo for setting niceness
 echo "ark              -       nice            -20" | sudo tee -a Arkbuild/etc/security/limits.conf
 
+# For MiniLoong Units Only.  Include led control script and systemd
+if [[ "$UNIT" == "miniloong" ]]; then
+  sudo cp scripts/miniloong/*.service Arkbuild/etc/systemd/system/
+  sudo cp scripts/miniloong/*.sh Arkbuild/usr/local/bin/
+  sudo chroot Arkbuild/ bash -c "systemctl enable miniloong_led"
+fi
+
 # For RGB30 Units Only.  Check for v1 or v2 units and change dtbs due to performance issues.
 # Also provide some battery life status indication
 if [[ "$UNIT" == "rgb30" ]]; then
