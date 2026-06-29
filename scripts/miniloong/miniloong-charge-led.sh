@@ -10,8 +10,13 @@
 #   /sys/class/leds/aw20036_led/miniloong_blink_rate
 
 LED="/sys/class/leds/aw20036_led"
+CONFIG_FILE="/home/ark/.config/miniloong_led_mode"
 
-BRIGHTNESS=16
+if [ -f "$CONFIG_FILE" ]; then
+  BRIGHTNESS="$(sed -n '2p' "$CONFIG_FILE" | tr -d '\r\n[:space:]')"
+else
+  BRIGHTNESS=16
+fi
 
 # Charging pulse: slow/comfortable.
 PULSE_ON_MS="${PULSE_ON_MS:-800}"
